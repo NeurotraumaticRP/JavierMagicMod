@@ -1,0 +1,19 @@
+<Afflictions>
+    <affliction
+    name="Mana"
+    identifier="mana"
+    limbspecific="false"
+    indicatorlimb="Torso"
+    maxstrength="1000" >
+    <icon texture="Content/UI/MainIconsAtlas.png" sourcerect="896,640,128,128" color="127,0,255,255" origin="0,0"/>
+    </affliction>
+
+    <affliction
+    name="Max Mana"
+    identifier="maxmana"
+    limbspecific="false"
+    indicatorlimb="Torso"
+    maxstrength="1000" >
+    <icon texture="Content/UI/MainIconsAtlas.png" sourcerect="896,640,128,128" color="127,0,255,255" origin="0,0"/>
+    </affliction>
+</Afflictions>

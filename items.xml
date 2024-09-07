@@ -1,0 +1,55 @@
+<Items>
+<Item name="magicexplosion" identifier="magicexplosion" Scale="1" tags="" sonarsize="0" hideinmenus="true" impacttolerance="0.001" health="0.01">
+    <Body radius="15" density="0" />
+    <Sprite texture="Content/Items/Weapons/weapons_new.png" sourcerect="0,0,2,2" depth="0.55" origin="0.5,0.5" />
+    <ItemComponent>
+      <!-- reduce condition to remove the emitter shortly after spawning it -->
+      <StatusEffect type="Always" target="This" condition="-50" />
+      <StatusEffect type="OnBroken" target="This">
+        <sound file="Content/Items/Weapons/ExplosionMedium1.ogg" range="5000" />
+        <sound file="Content/Items/Weapons/ExplosionMedium2.ogg" range="5000" />
+        <sound file="Content/Items/Weapons/ExplosionMedium3.ogg" range="5000" />
+        <Explosion range="215.0" ballastfloradamage="95" structuredamage="55" itemdamage="350" force="20" severlimbsprobability="1.15" decal="explosion" decalsize="1" penetration="0.41">
+          <Affliction identifier="explosiondamage" strength="135" dividebylimbcount="true"/>
+          <Affliction identifier="burn" strength="12" probability="0.2" dividebylimbcount="false"/>
+          <Affliction identifier="bleeding" strength="40" probability="0.05" dividebylimbcount="false"/>
+          <Affliction identifier="stun" strength="8" />
+        </Explosion>
+        <Remove />
+      </StatusEffect>
+    </ItemComponent>
+</Item>
+<Item name="manasyringe" identifier="manasyringe" category="Medical" maxstacksize="8" cargocontaineridentifier="mediccrate" Tags="smallitem,chem,medical,syringe" description="" useinhealthinterface="true" scale="0.5" impactsoundtag="impact_metal_light" RequireAimToUse="True">
+    <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="256,448,64,64" origin="0.5,0.5" />
+    <Sprite texture="Medicines.png" sourcerect="0,0,37,69" depth="0.6" origin="0.5,0.5" />
+    <Body width="35" height="65" density="10.2" waterdragcoefficient="1" />
+    <MeleeWeapon canBeCombined="true" removeOnCombined="true" slots="Any,RightHand,LeftHand" aimpos="40,5" handle1="0,0" holdangle="220" reload="1.0" msg="ItemMsgPickUpSelect" HitOnlyCharacters="true">
+      <RequiredSkill identifier="medical" level="40" />
+      <StatusEffect type="OnSuccess" target="This" Condition="-100.0" setvalue="true"/>
+      <StatusEffect type="OnFailure" target="This" Condition="-100.0" setvalue="true"/>
+      <StatusEffect tags="medical" type="OnSuccess" target="UseTarget">
+        <Affliction identifier="mana" amount="100" />
+      </StatusEffect>
+      <StatusEffect tags="medical" type="OnFailure" target="UseTarget">
+        <Affliction identifier="mana" amount="50" />
+      </StatusEffect>
+      <StatusEffect type="OnSuccess" target="UseTarget">
+        <Conditional entitytype="eq Character"/>
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+      </StatusEffect>
+      <StatusEffect type="OnFailure" target="UseTarget">
+        <Conditional entitytype="eq Character"/>
+        <Sound file="Content/Items/Medical/Syringe.ogg" range="500" />
+      </StatusEffect>
+      <StatusEffect type="OnImpact" target="UseTarget" multiplyafflictionsbymaxvitality="true" AllowWhenBroken="true">
+        <Affliction identifier="stun" amount="0.1" />
+      </StatusEffect>
+      <!-- Remove the item when fully used -->
+      <StatusEffect type="OnBroken" target="This">
+        <Remove />
+      </StatusEffect>
+    </MeleeWeapon>
+    <Projectile characterusable="false" launchimpulse="18.0" sticktocharacters="true" launchrotation="-90" inheritstatuseffectsfrom="MeleeWeapon" inheritrequiredskillsfrom="MeleeWeapon" />
+    <SkillRequirementHint identifier="medical" level="40" />
+  </Item>
+</Items>
