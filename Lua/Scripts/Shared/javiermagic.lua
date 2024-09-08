@@ -5,6 +5,7 @@ Javiermagic.spell = {}
 
 -- Function to get the cursor position and create an explosion
 Javiermagic.spell["explosion"] = {
+    id = "explosionspell",
     manausage = 50,
     cast = function(client)
         -- Get the cursor position

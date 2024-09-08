@@ -2,4 +2,6 @@
 <contentpackage name="Dr. Javier's Medical Magic 2" modversion="1.0" corepackage="False" gameversion="1.0.13.2" >
     <Item file="%ModDir%/items.xml" />
     <Afflictions file="%ModDir%/Afflictions.xml" />
+    <Talents file="%ModDir%/Talents.xml" />
+    <Text file="%ModDir%/English.xml" />
 </contentpackage>
