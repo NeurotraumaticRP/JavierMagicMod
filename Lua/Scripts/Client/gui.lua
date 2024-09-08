@@ -1,6 +1,9 @@
 if CLIENT then
-    -- List of learned spells (for now, only "explosion" is learned)
-    local learnedSpells = {"explosion"}
+    -- List of learned spells
+    local learnedSpells = {}
+
+    -- Ensure Character.Controlled is not nil before proceeding
+    if not Character.Controlled then return end
 
     -- Function to create a text label for each spell
     local function CreateSpellLabel(list, spellName, color, style, size, anchor, rect_transform)
@@ -52,13 +55,22 @@ if CLIENT then
 
     -- Hook to populate the spell list and handle key input
     Hook.Add("Think", "populateSpellList", function()
-        if PlayerInput.KeyHit(Javiermagic.config.Spellgui) then
+        if PlayerInput.KeyHit(Javiermagic.config.Spellgui) and GUI.KeyboardDispatcher.Subscriber == nil then
+            local character = Character.Controlled
+            learnedSpells = {}
+
+            -- Check for each talent that has a spell
+            for spellName, spellData in pairs(Javiermagic.spell) do
+                if character.HasTalent(spellData.id) then
+                    table.insert(learnedSpells, spellName)
+                end
+            end
+
             spellList.ClearChildren()
             if spellList.Visible then
                 spellList.Visible = false
             else
                 spellList.Visible = true
-                local character = Character.Controlled
                 local activeSpell = Javiermagic.GetActiveSpell(character)
                 for _, spellName in ipairs(learnedSpells) do
                     local color = (activeSpell == spellName) and Color.Green or Color.White

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Talents>
+  <Talent identifier="explosionspell">
+    <Icon texture = "Content/UI/TalentsIcons3.png" sheetindex = "0,4" sheetelementsize = "128,128" />
+    <Description tag="talentdescription.explosionspell" />
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+        <Conditions>
+        </Conditions>
+        <Abilities>
+        </Abilities>
+      </AbilityGroupEffect>
+  </Talent>
+</Talents>
