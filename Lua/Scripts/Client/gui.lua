@@ -2,6 +2,9 @@ if CLIENT then
     -- List of learned spells
     local learnedSpells = {}
 
+    -- Ensure Character.Controlled is not nil before proceeding
+    if not Character.Controlled then return end
+
     -- Function to create a text label for each spell
     local function CreateSpellLabel(list, spellName, color, style, size, anchor, rect_transform)
         local textbutton = GUI.Button(GUI.RectTransform(size or Vector2(1, 0.1), rect_transform or list.RectTransform, anchor or GUI.Anchor.TopCenter), spellName, GUI.Alignment.Center, style, Color.Transparent)
