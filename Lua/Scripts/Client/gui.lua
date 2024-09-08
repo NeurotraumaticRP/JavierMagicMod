@@ -26,16 +26,12 @@ if CLIENT then
             end
 
             -- Update the colors of all buttons
-            if list.Content then
-                for child in list.Content.Children do
-                    if child.UserData == spellName then
-                        child.TextColor = Color.Green
-                    else
-                        child.TextColor = Color.White
-                    end
+            for child in list.Content.Children do
+                if child.UserData == spellName then
+                    child.TextColor = Color.Green
+                else
+                    child.TextColor = Color.White
                 end
-            else
-                print("Error: list.Content is nil")
             end
 
             return true
@@ -62,8 +58,11 @@ if CLIENT then
                 spellList.Visible = false
             else
                 spellList.Visible = true
+                local character = Character.Controlled
+                local activeSpell = Javiermagic.GetActiveSpell(character)
                 for _, spellName in ipairs(learnedSpells) do
-                    CreateSpellLabel(spellList.Content, spellName, nil, "GUIButtonLarge", nil, nil, nil)
+                    local color = (activeSpell == spellName) and Color.Green or Color.White
+                    CreateSpellLabel(spellList.Content, spellName, color, "GUIButtonLarge", nil, nil, nil)
                 end
                 Hook.Patch("Barotrauma.GameScreen", "AddToGUIUpdateList", function()
                     frame.AddToGUIUpdateList()
