@@ -2,4 +2,8 @@
 <infotexts language="English" nowhitespace="false" translatedname="English">
     <talentname.explosionspell>Explosion Spell</talentname.explosionspell>
     <talentdescription.explosionspell>It's an Explosion Spell</talentdescription.explosionspell>
+    <talentname.manaspell>Mana Spell</talentname.manaspell>
+    <talentdescription.manaspell>Gives +10 mana</talentdescription.manaspell>
+    <talentname.maxmanaspell>Max Mana Spell</talentname.maxmanaspell>
+    <talentdescription.maxmanaspell>Gives +10 Max Mana</talentdescription.maxmanaspell>
 </infotexts>
