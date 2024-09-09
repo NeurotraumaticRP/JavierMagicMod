@@ -24,8 +24,26 @@ Networking.Receive("Javiermagic.useSpell", function(message, client)
                 Javiermagic.SetAffliction(character, "mana", mana - spellData.manausage)
             end
         end
+        -- Apply the spell effect
         Javiermagic.CharacterUseSpell(client, activeSpell)
     else
         print("Client does not have the talent for the spell: " .. tostring(activeSpell))
+    end
+end)
+
+-- Add a hook to constantly drain mana for toggle spells
+Hook.Add("think", "Javiermagic.manaDrain", function()
+    for _, client in pairs(Client.ClientList) do
+        local character = client.Character
+        if character then
+            for spellName, spellData in pairs(Javiermagic.spell) do
+                if spellData.inputType == "toggle" and spellData.active then
+                    if not Javiermagic.DrainMana(character, 1) then
+                        spellData.active = false
+                        spellData.toggleOff(client)
+                    end
+                end
+            end
+        end
     end
 end)

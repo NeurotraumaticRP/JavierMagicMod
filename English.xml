@@ -8,4 +8,6 @@
     <talentdescription.maxmanaspell>Gives +10 Max Mana</talentdescription.maxmanaspell>
     <talentname.severspell>Sever Spell</talentname.severspell>
     <talentdescription.severspell>Severs a random limb of target at cursor</talentdescription.severspell>
+    <talentname.magichand>Magic Hand</talentname.magichand>
+    <talentdescription.magichand>Lets you grab objects and people at cursor</talentdescription.magichand>
 </infotexts>

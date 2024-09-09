@@ -16,4 +16,13 @@
     maxstrength="1000" >
     <icon texture="Content/UI/MainIconsAtlas.png" sourcerect="896,640,128,128" color="127,0,255,255" origin="0,0"/>
     </affliction>
+
+    <affliction
+    name="Magic Hand Active"
+    identifier="magichand"
+    limbspecific="false"
+    indicatorlimb="Torso"
+    maxstrength="1000" >
+    <icon texture="Content/UI/MainIconsAtlas.png" sourcerect="896,640,128,128" color="127,0,255,255" origin="0,0"/>
+    </affliction>
 </Afflictions>

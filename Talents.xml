@@ -3,41 +3,21 @@
   <Talent identifier="explosionspell">
     <Icon texture = "Content/UI/TalentsIcons3.png" sheetindex = "0,4" sheetelementsize = "128,128" />
     <Description tag="talentdescription.explosionspell" />
-    <AbilityGroupEffect abilityeffecttype="OnAttack">
-        <Conditions>
-        </Conditions>
-        <Abilities>
-        </Abilities>
-      </AbilityGroupEffect>
   </Talent>
   <Talent identifier="manaspell">
     <Icon texture = "Content/UI/TalentsIcons3.png" sheetindex = "0,4" sheetelementsize = "128,128" />
     <Description tag="talentdescription.manaspell" />
-    <AbilityGroupEffect abilityeffecttype="OnAttack">
-        <Conditions>
-        </Conditions>
-        <Abilities>
-        </Abilities>
-      </AbilityGroupEffect>
   </Talent>
   <Talent identifier="maxmanaspell">
     <Icon texture = "Content/UI/TalentsIcons3.png" sheetindex = "0,4" sheetelementsize = "128,128" />
     <Description tag="talentdescription.maxmanaspell" />
-    <AbilityGroupEffect abilityeffecttype="OnAttack">
-        <Conditions>
-        </Conditions>
-        <Abilities>
-        </Abilities>
-      </AbilityGroupEffect>
   </Talent>
   <Talent identifier="severspell">
     <Icon texture = "Content/UI/TalentsIcons3.png" sheetindex = "0,4" sheetelementsize = "128,128" />
     <Description tag="talentdescription.severspell" />
-    <AbilityGroupEffect abilityeffecttype="OnAttack">
-        <Conditions>
-        </Conditions>
-        <Abilities>
-        </Abilities>
-      </AbilityGroupEffect>
+  </Talent>
+  <Talent identifier="magichand">
+    <Icon texture = "Content/UI/TalentsIcons3.png" sheetindex = "0,4" sheetelementsize = "128,128" />
+    <Description tag="talentdescription.severspell" />
   </Talent>
 </Talents>

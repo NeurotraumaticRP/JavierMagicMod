@@ -7,6 +7,7 @@ Javiermagic.spell = {}
 Javiermagic.spell["explosion"] = {
     id = "explosionspell",
     manausage = 50,
+    inputType = "single", -- Default input type
     cast = function(client)
         -- Get the cursor position
         local cursorPosition = Javiermagic.GetClientCursor(client)
@@ -19,6 +20,7 @@ Javiermagic.spell["explosion"] = {
 Javiermagic.spell["givemana"] = {
     id = "manaspell",
     manausage = 0,
+    inputType = "single", -- Default input type
     cast = function(client)
         local character = client.Character
         local prevmana = Javiermagic.GetAfflictionStrength(character, "mana") or 0
@@ -29,6 +31,7 @@ Javiermagic.spell["givemana"] = {
 Javiermagic.spell["givemaxmana"] = {
     id = "maxmanaspell",
     manausage = 0,
+    inputType = "single", -- Default input type
     cast = function(client)
         local character = client.Character
         local prevmana = Javiermagic.GetAfflictionStrength(character, "maxmana") or 0
@@ -40,6 +43,7 @@ Javiermagic.spell["sever"] = {
     id = "severspell",
     manausage = 100,
     NTRequired = true,
+    inputType = "single", -- Default input type
     cast = function(client)
         local targetdistances = {}
         local character = client.Character
@@ -69,6 +73,44 @@ Javiermagic.spell["sever"] = {
                 local limbtype = selectedlimb
                 NT.TraumamputateLimb(target,limbtype)
             end
+        end
+    end
+}
+
+Javiermagic.spell["magichand"] = {
+    id = "magichand",
+    manausage = 0.1,
+    NTRequired = false,
+    inputType = "toggle", -- Toggle input type
+    active = false, -- Track whether the spell is active or not
+    toggleOn = function(client)
+        local spell = Javiermagic.spell["magichand"]
+        spell.active = true -- Set the spell as active
+        local character = client.Character
+        if not character then return end
+
+        -- Apply the "magichand" affliction to the character
+        Javiermagic.SetAffliction(character, "magichand", 10)
+        print("Magic Hand activated")
+    end,
+    toggleOff = function(client)
+        local spell = Javiermagic.spell["magichand"]
+        spell.active = false -- Set the spell as inactive
+        local character = client.Character
+        if not character then return end
+
+        -- Remove the "magichand" affliction from the character
+        Javiermagic.SetAffliction(character, "magichand", 0)
+        print("Magic Hand deactivated")
+    end,
+    cast = function(client)
+        local spell = Javiermagic.spell["magichand"]
+
+        -- Toggle between on and off based on the current state
+        if spell.active then
+            spell.toggleOff(client)
+        else
+            spell.toggleOn(client)
         end
     end
 }
