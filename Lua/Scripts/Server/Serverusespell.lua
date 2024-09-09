@@ -8,11 +8,13 @@ Networking.Receive("Javiermagic.useSpell", function(message, client)
         print("Client does not have an associated character.")
         return
     end
-
     -- Check if the character has the talent for the spell
     local spellData = Javiermagic.spell[activeSpell]
     if spellData and character.HasTalent(spellData.id) then
-
+        if (spellData.NTRequired == nil or spellData.NTRequired) and not HasNT then
+            print("Neurotrauma is required to cast this spell.")
+            return
+        end
         local mana = Javiermagic.GetAfflictionStrength(character, "mana") or 0
         if spellData.manausage then 
             if mana < spellData.manausage then
@@ -21,7 +23,6 @@ Networking.Receive("Javiermagic.useSpell", function(message, client)
                 -- Deduct mana from the character
                 Javiermagic.SetAffliction(character, "mana", mana - spellData.manausage)
             end
-            Javiermagic.CharacterUseSpell(client, activeSpell)
         end
         Javiermagic.CharacterUseSpell(client, activeSpell)
     else

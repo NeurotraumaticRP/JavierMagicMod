@@ -6,4 +6,6 @@
     <talentdescription.manaspell>Gives +10 mana</talentdescription.manaspell>
     <talentname.maxmanaspell>Max Mana Spell</talentname.maxmanaspell>
     <talentdescription.maxmanaspell>Gives +10 Max Mana</talentdescription.maxmanaspell>
+    <talentname.severspell>Sever Spell</talentname.severspell>
+    <talentdescription.severspell>Severs a random limb of target at cursor</talentdescription.severspell>
 </infotexts>

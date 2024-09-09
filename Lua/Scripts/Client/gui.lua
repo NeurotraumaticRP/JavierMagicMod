@@ -12,17 +12,22 @@ if CLIENT then
 
     -- Function to create a text label for each spell
     local function CreateSpellLabel(list, spellName, color, style, size, anchor, rect_transform)
+        local spellData = Javiermagic.spell[spellName]
+        if (spellData.NTRequired == nil or spellData.NTRequired) and not HasNT then
+            return nil -- Do not create the label if NT is required and HasNT is false
+        end
+    
         local textbutton = GUI.Button(GUI.RectTransform(size or Vector2(1, 0.1), rect_transform or list.RectTransform, anchor or GUI.Anchor.TopCenter), spellName, GUI.Alignment.Center, style, Color.Transparent)
         textbutton.TextColor = color or Color.White
         textbutton.CanBeSelected = true
         textbutton.CanBeFocused = true
         textbutton.TextBlock.AutoScaleHorizontal = true
         textbutton.TextBlock.AutoScaleVertical = true
-
+    
         textbutton.OnClicked = function()
             local character = Character.Controlled
             local activeSpell = Javiermagic.GetActiveSpell(character)
-
+    
             if activeSpell == spellName then
                 -- Deactivate the spell if it is already active
                 Javiermagic.SetActiveSpell(character, nil)
@@ -36,14 +41,12 @@ if CLIENT then
                 textbutton.TextColor = Color.Green
             end
 
-            -- Update the colors of all buttons
-
             -- Add the frame to the GUI update list to ensure the changes are reflected
             frame.AddToGUIUpdateList()
 
             return true
         end
-
+    
         textbutton.UserData = spellName
         return textbutton
     end

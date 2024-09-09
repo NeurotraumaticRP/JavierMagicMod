@@ -30,4 +30,14 @@
         </Abilities>
       </AbilityGroupEffect>
   </Talent>
+  <Talent identifier="severspell">
+    <Icon texture = "Content/UI/TalentsIcons3.png" sheetindex = "0,4" sheetelementsize = "128,128" />
+    <Description tag="talentdescription.severspell" />
+    <AbilityGroupEffect abilityeffecttype="OnAttack">
+        <Conditions>
+        </Conditions>
+        <Abilities>
+        </Abilities>
+      </AbilityGroupEffect>
+  </Talent>
 </Talents>
