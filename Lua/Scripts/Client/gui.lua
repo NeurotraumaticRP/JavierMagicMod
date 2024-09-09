@@ -96,8 +96,8 @@ if CLIENT then
     Hook.Add("Think", "manabarupdate", function()
         local character = Character.Controlled
         if character then
-            local mana = HF.GetAfflictionStrength(character, "mana") or 0
-            local maxmana = HF.GetAfflictionStrength(character, "maxmana") or 100
+            local mana = Javiermagic.GetAfflictionStrength(character, "mana") or 0
+            local maxmana = Javiermagic.GetAfflictionStrength(character, "maxmana") or 100
             if mana > maxmana then
                 mana = maxmana
             end

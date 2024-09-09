@@ -21,8 +21,8 @@ Javiermagic.spell["givemana"] = {
     manausage = 0,
     cast = function(client)
         local character = client.Character
-        local prevmana = HF.GetAfflictionStrength(character,"mana") or 0
-        HF.SetAffliction(character,"mana",prevmana + 10)
+        local prevmana = Javiermagic.GetAfflictionStrength(character,"mana") or 0
+        Javiermagic.SetAffliction(character,"mana",prevmana + 10)
     end
 }
 
@@ -31,7 +31,7 @@ Javiermagic.spell["givemaxmana"] = {
     manausage = 0,
     cast = function(client)
         local character = client.Character
-        local prevmana = HF.GetAfflictionStrength(character,"maxmana") or 0
-        HF.SetAffliction(character,"maxmana",prevmana + 10)
+        local prevmana = Javiermagic.GetAfflictionStrength(character,"maxmana") or 0
+        Javiermagic.SetAffliction(character,"maxmana",prevmana + 10)
     end
 }

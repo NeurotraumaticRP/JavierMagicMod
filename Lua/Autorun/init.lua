@@ -5,6 +5,7 @@ Javiermagic.Path = path
 -- shared
 dofile(Javiermagic.Path .. "/Lua/Scripts/Shared/javiermagic.lua")
 dofile(Javiermagic.Path .. "/Lua/Scripts/Shared/helperfunctions.lua")
+dofile(Javiermagic.Path .. "/Lua/Scripts/Shared/neurofunctions.lua")
 -- client side
 if CLIENT then 
     dofile(Javiermagic.Path .. "/Lua/Scripts/Client/gui.lua")
