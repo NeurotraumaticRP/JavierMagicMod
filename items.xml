@@ -67,6 +67,69 @@
   </Item>
   <!--<GiveTalentInfo giverandom="true" talentidentifiers="prodigy,downwiththeship, physicalconditioning,swole, exampleofhealth,laresistance, egghead,grounded, ballastdenizen,miner, skedaddle,revengesquad" />-->
 
-
+  
+    <Item name="LightningTestingRevolver" identifier="LightningTestingRevolver" category="Weapon" cargocontaineridentifier="metalcrate" tags="smallitem,weapon,gun,pistolitem,provocativetohumanai,gunsmith,mountableweapon" Scale="0.5" impactsoundtag="impact_metal_light">
+    <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="128,64,64,64" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Weapons/weapons_new.png" sourcerect="0,418,76,41" depth="0.55" origin="0.5,0.5" />
+    <Body width="72" height="40" density="25" />
+    <Holdable slots="Any,RightHand,LeftHand" controlpose="true" aimpos="70,5" handle1="-25,-7" msg="ItemMsgPickUpSelect" />
+    <RangedWeapon barrelpos="29,11" spread="0.1" unskilledspread="6" combatPriority="70" drawhudwhenequipped="true" crosshairscale="0.2" reload="0.5" DualWieldReloadTimePenaltyMultiplier="1.75" DualWieldAccuracyPenalty="8">
+      <Crosshair texture="Content/Items/Weapons/Crosshairs.png" sourcerect="0,256,256,256" />
+      <CrosshairPointer texture="Content/Items/Weapons/Crosshairs.png" sourcerect="256,256,256,256" />
+      <Sound file="Content/Items/Weapons/Revolver1.ogg" type="OnUse" range="3000" selectionmode="Random" />
+      <Sound file="Content/Items/Weapons/Revolver2.ogg" type="OnUse" range="3000" />
+      <Sound file="Content/Items/Weapons/Revolver3.ogg" type="OnUse" range="3000" />
+      <ParticleEmitter particle="muzzleflash" particleamount="1" velocitymin="0" velocitymax="0" />
+      <StatusEffect type="OnUse" target="This">
+        <Explosion range="150.0" force="1.5" shockwave="false" smoke="false" flames="false" sparks="false" underwaterbubble="false" camerashake="6.0" />
+        <ParticleEmitter particle="casingfirearm" particleamount="1" anglemin="90" anglemax="150" velocitymin="50" velocitymax="250" CopyEntityAngle="true" />
+      </StatusEffect>
+      <RequiredItems items="LightningBolt" type="Contained" msg="ItemMsgAmmoRequired" />
+      <RequiredSkill identifier="weapons" level="40" />
+    </RangedWeapon>
+    <ItemContainer capacity="1" maxstacksize="100" hideitems="true" containedstateindicatorstyle="bullet">
+    <StatusEffect target="This" type="OnSpawn" disabledeltatime="true">
+    <SpawnItem identifiers="LightningBolt" spawnposition="ThisInventory" count="100" SpawnIfInventoryFull="false" />
+    </StatusEffect>
+	  <SlotIcon slotindex="0" texture="Content/UI/StatusMonitorUI.png" sourcerect="256,448,64,64" origin="0.5,0.5" />
+      <Containable items="LightningBolt" />
+    </ItemContainer>
+	</Item>
+    <Item name="LightningBolt"  maxstacksize="100" maxstacksizecharacterinventory="100" identifier="LightningBolt" Scale="0.5" >
+    <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="320,968,55,55" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Weapons/weapons_new.png" sourcerect="85,368,168,11" depth="0.55" origin="0.5,0.5" />
+    <Body radius="12" density="30" />
+    <Projectile characterusable="false" launchimpulse="25.0" sticktocharacters="false" sticktoitems="false" sticktostructures="false" sticktodoors="false">
+	<StatusEffect type="OnImpact" target="This" disabledeltatime="true">
+	<ParticleEmitter particle="ElectricShock" distancemin="10" distancemax="50" particleamount="20" anglemin="0" anglemax="360" scalemin="0.2" scalemax="0.3" />
+	<Explosion range="100.0" force="10" Showeffects="false" shockwave="true" sparks="true" camerashake="6.0" >
+	<Affliction identifier="stun" strength="2" />
+	<Affliction identifier="burn" strength="10" />
+	</Explosion>
+	<sound file="Content/Items/Weapons/WEAPONS_electricalDischarge1.ogg" range="20000" selectionmode="random"/>
+    <sound file="Content/Items/Weapons/WEAPONS_electricalDischarge2.ogg" range="20000" />
+    <Remove />
+    </StatusEffect>
+	<StatusEffect target="This" interval="0.03" disabledeltatime="true">
+	<ParticleEmitter particle="ElectricShock" distancemin="0" distancemax="0" particleamount="1" anglemin="0" anglemax="0" scalemin="0.1" scalemax="0.15" />
+    </StatusEffect>
+	<LightComponent lightcolor="80,80,255,100" range="200.0" IsOn="true" castshadows="false" alphablend="true">
+    <LightTexture texture="Content/Lights/pointlight_bright.png" origin="0.5,0.5" />
+    </LightComponent>
+    </Projectile>
+	</Item>
+	<Item name="LightningBoltSpawner" identifier="LightningBoltSpawner" Scale="0.5" >
+    <InventoryIcon texture="Content/Items/InventoryIconAtlas.png" sourcerect="320,968,55,55" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/Weapons/weapons_new.png" sourcerect="85,368,168,11" depth="0.55" origin="0.5,0.5" />
+    <Body radius="5" density="30" />
+    <Itemcomponent>
+	<StatusEffect target="This" type="OnSpawn" disabledeltatime="true" condition="-100"/>
+	<StatusEffect target="This" type="OnBroken" disabledeltatime="true">
+    <SpawnItem identifiers="LightningBolt" spawnposition="ThisInventory" Spawnrotationtype="This" />
+	<Remove/>
+    </StatusEffect>
+	</Itemcomponent>
+	</Item>
+  
 
 </Items>
