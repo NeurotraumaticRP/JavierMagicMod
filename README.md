@@ -1,16 +1,10 @@
 # JavierMagicMod
 JavierMagicMod is a mod for Barotrauma that allows players to use various magical spells. This mod includes a system for defining and using spells, managing mana, and integrating with the game's talent system.
 
-## Features
-
-- Cast spells with different input types: single, toggle, and hold.
-- Manage mana and max mana for characters.
-- Define custom spells and integrate them with the game's talent system.
-
 ## Installation
 
 1. Download the mod and extract it to your Barotrauma `LocalMods` directory.
-2. Enable the mod in the game's mod manager.
+2. Enable the mod in the game
 
 ## Usage
 
