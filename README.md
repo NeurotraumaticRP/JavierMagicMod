@@ -18,6 +18,7 @@ JavierMagicMod is a mod for Barotrauma that allows players to use various magica
 
 - Press `K` to cast the currently selected spell.
 - Press `L` to open the spell selection GUI.
+- These can be changed in `config.lua`
 
 ### Mana Management
 
@@ -42,17 +43,11 @@ Javiermagic.spell["yourspell"] = {
         local character = client.Character
         if not character then return end
         -- Your spell logic here
+        -- example
+        local cursor = Javiermagic.GetClientCursor(client)
+
+        Game.Explode(cursor, 100, 100, 100, 100, 100)
     end,
-    toggleOn = function(client)
-        local character = client.Character
-        if not character then return end
-        -- Your toggle on logic here
-    end,
-    toggleOff = function(client)
-        local character = client.Character
-        if not character then return end
-        -- Your toggle off logic here
-    end
 }
 ```
 
@@ -84,12 +79,19 @@ If you want to add an item that grants the talent, open `items.xml` and define t
 
 Example:
 ```xml
-<Item identifier="yourspellitem">
-    <Name>Your Spell Item</Name>
-    <Description>Grants the Your Spell talent.</Description>
-    <Talent>yourspell</Talent>
-    <!-- Additional item properties here -->
-</Item>
+<Item name="Spell book" identifier="spellbook" category="Misc" cargocontaineridentifier="metalcrate" allowasextracargo="true" Tags="smallitem,skillbook" maxstacksize="8" scale="0.5" impactsoundtag="impact_soft">
+    <InventoryIcon texture="Content/Items/JobGear/TalentGear.png" sourcerect="123,368,38,56" origin="0.5,0.5" />
+    <Sprite texture="Content/Items/JobGear/TalentGear.png" sourcerect="107,74,32,38" depth="0.6" origin="0.5,0.5" />
+    <Body width="28" height="36" density="20" />
+    <Holdable slots="Any,RightHand+LeftHand" aimable="false" aimpos="40,-20" handle1="5,0" aimangle="260" swingamount="0,3" swingspeed="0.5" swingwhenaiming="true" msg="ItemMsgPickUpSelect">
+      <StatusEffect type="OnSecondaryUse" target="This" Condition="-10.0" />
+      <StatusEffect type="OnSecondaryUse" target="This,Character" disabledeltatime="true">
+        <Conditional Condition="lte 0" />
+        <GiveTalentInfo talentidentifiers="yourspell" /> <!-- doesnt need to be a book, just needs to give talent -->
+        <RemoveItem />
+      </StatusEffect>
+    </Holdable>
+  </Item>
 ```
 
 ### Step 5 (Optional): Add XML Stuff for Effects
