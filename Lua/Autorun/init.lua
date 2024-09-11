@@ -25,6 +25,7 @@ end
 -- server side
 if not CLIENT then 
     dofile(Javiermagic.Path .. "/Lua/Scripts/Server/Serverusespell.lua")
+    dofile(Javiermagic.Path .. "/Lua/Scripts/Server/Serverconfig.lua")
 end
 
 end, 1000)
