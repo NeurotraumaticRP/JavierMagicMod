@@ -20,4 +20,8 @@
     <Icon texture = "Content/UI/TalentsIcons3.png" sheetindex = "0,4" sheetelementsize = "128,128" />
     <Description tag="talentdescription.severspell" />
   </Talent>
+  <Talent identifier="lightningbolt">
+    <Icon texture = "Content/UI/TalentsIcons3.png" sheetindex = "0,4" sheetelementsize = "128,128" />
+    <Description tag="talentdescription.lightningbolt" />
+  </Talent>
 </Talents>

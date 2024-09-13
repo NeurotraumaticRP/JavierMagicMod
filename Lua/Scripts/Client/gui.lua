@@ -111,4 +111,8 @@ if CLIENT then
             frame.AddToGUIUpdateList()
         end
     end)
+
+    Hook.Add("roundStart", "updateroundstart", function()
+        frame.AddToGUIUpdateList()
+    end)
 end

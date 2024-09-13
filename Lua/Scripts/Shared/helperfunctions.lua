@@ -143,3 +143,89 @@ function Javiermagic.DrainMana(character, amount)
     end
     return true
 end
+
+function Javiermagic.SpawnProjectile(item, position, rotation, character)
+    local client = Util.FindClientCharacter(character)
+    local targetposition = Javiermagic.GetClientCursor(client)
+    local prefab = ItemPrefab.GetItemPrefab(item)
+    Entity.Spawner.AddItemToSpawnQueue(prefab, position, nil, nil, function(newitem)
+        newitem.body.SmoothRotate(rotation, 999, false)
+        newitem.body.LinearVelocity = (targetposition - position) * 0.1
+        local projectile = newitem.GetComponentString("Projectile")
+        local limbs = {}
+        for limb in character.AnimController.Limbs do
+            table.insert(limbs, limb)
+        end
+        projectile.Shoot(character, newitem.WorldPosition, newitem.WorldPosition, rotation, limbs, nil, 1, 0)
+    end)
+
+end
+
+function Javiermagic.GetRotation(pos1, pos2) -- inouts are vector2
+    local deltaX = pos2.X - pos1.X
+    local deltaY = pos2.Y - pos1.Y
+
+    local angle = math.atan(deltaY, deltaX)
+
+    local degrees = math.deg(angle)
+
+    if degrees < 0 then
+        degrees = degrees + 360
+    end
+
+    return degrees
+end
+
+-- Helper function to get characters within a specified radius
+function Javiermagic.GetCharactersInRadius(radius, position)
+    local charactersInRange = {}
+    for targetcharacter in Character.CharacterList do
+        if not targetcharacter.IsDead then
+            local targetPosition = targetcharacter.WorldPosition
+            local distance = Vector2.Distance(position, targetPosition)
+            if distance <= radius then
+                table.insert(charactersInRange, targetcharacter)
+            end
+        end
+    end
+    return charactersInRange
+end
+
+function Javiermagic.GetClosestLimb(pos, character)
+    local distanceThreshold = 100
+    local selectedlimb = nil
+    local limbs = {}
+    
+    if character and character.AnimController and character.AnimController.Limbs then
+        for _, limb in ipairs(character.AnimController.Limbs) do
+            if Vector2.Distance(pos, limb.WorldPosition) < distanceThreshold then
+                local limbDistance = Vector2.Distance(pos, limb.WorldPosition)
+                table.insert(limbs, {limb = limb, distance = limbDistance})
+            end
+        end
+
+        -- Sort limbs by distance after populating the list
+        table.sort(limbs, function(a, b) return a.distance < b.distance end)
+
+        if #limbs > 0 then
+            selectedlimb = limbs[1].limb
+        end
+    end
+
+    return selectedlimb, limbs
+end
+
+
+-- Helper function to refund mana for a spell
+function Javiermagic.RefundMana(spell, client)
+    local character = client.Character
+    if not character then return end
+
+    local manaUsage = spell.manausage or 0
+    local currentMana = Javiermagic.GetAfflictionStrength(character, "mana") or 0
+
+    Javiermagic.SetAffliction(character, "mana", currentMana + manaUsage)
+end
+
+--item.SmoothRotate(rotation, 999, false)
+--item.Use(false, character, nil, "This", character)

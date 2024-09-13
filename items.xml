@@ -123,12 +123,12 @@
     <Sprite texture="Content/Items/Weapons/weapons_new.png" sourcerect="85,368,168,11" depth="0.55" origin="0.5,0.5" />
     <Body radius="5" density="30" />
     <Itemcomponent>
-	<StatusEffect target="This" type="OnSpawn" disabledeltatime="true" condition="-100"/>
-	<StatusEffect target="This" type="OnBroken" disabledeltatime="true">
+    <ItemContainer capacity="1" maxstacksize="100" hideitems="true" containedstateindicatorstyle="bullet"></ItemContainer>
+	  <StatusEffect target="This" type="OnSpawn" disabledeltatime="true" condition="-100">
     <SpawnItem identifiers="LightningBolt" spawnposition="ThisInventory" Spawnrotationtype="This" />
-	<Remove/>
     </StatusEffect>
-	</Itemcomponent>
+	  <StatusEffect target="Contained" type="Always" disabledeltatime="true"/> 
+	  </Itemcomponent>
 	</Item>
   
 

@@ -20,7 +20,7 @@ Javiermagic.spell["explosion"] = {
 Javiermagic.spell["givemana"] = {
     id = "manaspell",
     manausage = 0,
-    inputType = "single", -- Default input type
+    inputType = "hold", -- Default input type
     cast = function(client)
         local character = client.Character
         local prevmana = Javiermagic.GetAfflictionStrength(character, "mana") or 0
@@ -31,7 +31,7 @@ Javiermagic.spell["givemana"] = {
 Javiermagic.spell["givemaxmana"] = {
     id = "maxmanaspell",
     manausage = 0,
-    inputType = "single", -- Default input type
+    inputType = "hold", -- Default input type
     cast = function(client)
         local character = client.Character
         local prevmana = Javiermagic.GetAfflictionStrength(character, "maxmana") or 0
@@ -45,37 +45,54 @@ Javiermagic.spell["sever"] = {
     NTRequired = true,
     inputType = "single", -- Default input type
     cast = function(client)
-        local targetdistances = {}
         local character = client.Character
         local cursorPosition = Javiermagic.GetClientCursor(client)
         
-        -- Add proximity threshold (e.g., 500 units as an example)
+        -- Define the proximity threshold (e.g., 500 units as an example)
         local proximityThreshold = 500 
         
-        for targetcharacter in Character.CharacterList do
-            if targetcharacter ~= character and not targetcharacter.IsDead then
-                local targetPosition = targetcharacter.WorldPosition
-                
-                -- Calculate distance between cursor and character
-                local distance = Vector2.Distance(cursorPosition, targetPosition)
-                if distance <= proximityThreshold then
-                    table.insert(targetdistances, {target = targetcharacter, distance = distance})
-                end
-            end
-        end
-        -- Sort the remaining characters by distance
-        table.sort(targetdistances, function(a, b) return a.distance < b.distance end)
-        if #targetdistances > 0 then
-            local target = targetdistances[1].target
+        -- Get characters within the specified radius
+        local charactersInRange = Javiermagic.GetCharactersInRadius(proximityThreshold, cursorPosition)
+        
+        -- Sort the characters by distance
+        table.sort(charactersInRange, function(a, b)
+            return Vector2.Distance(cursorPosition, a.WorldPosition) < Vector2.Distance(cursorPosition, b.WorldPosition)
+        end)
+        
+        if #charactersInRange > 0 then
+            local target = charactersInRange[1]
             if target then
-                local limbtypes = {LimbType.LeftArm, LimbType.RightArm, LimbType.LeftLeg, LimbType.RightLeg}
-                local selectedlimb = limbtypes[math.random(#limbtypes)]
-                local limbtype = selectedlimb
-                NT.TraumamputateLimb(target,limbtype)
+                -- Get the closest limb and all limbs
+                local _, limbs = Javiermagic.GetClosestLimb(cursorPosition, target)
+
+                local allamputated = true
+                local limb = nil
+                for _, limbData in ipairs(limbs) do
+                    local selectedlimb = limbData.limb
+                    selectedlimb = Javiermagic.NormalizeLimbType(selectedlimb.type)
+                    if not NT.LimbIsAmputated(target, selectedlimb) then
+                        allamputated = false
+                        limb = selectedlimb
+                        break
+                    end
+                end
+
+                local spell = Javiermagic.spell["sever"]
+                if allamputated then 
+                    print("all amputated")
+                    Javiermagic.RefundMana(spell, client) 
+                    return 
+                end
+                if limb == LimbType.Head and not NT.LimbIsArterialCut(target,limb) then
+                    NT.ArteryCutLimb(target,limb,100)
+                    return
+                elseif NT.LimbIsArterialCut(target,limb) then Javiermagic.RefundMana(spell, client) return end
+                NT.TraumamputateLimb(target, limb)
             end
         end
     end
 }
+
 
 Javiermagic.spell["magichand"] = {
     id = "magichand",
@@ -112,5 +129,20 @@ Javiermagic.spell["magichand"] = {
         else
             spell.toggleOn(client)
         end
+    end
+}
+
+Javiermagic.spell["lightningbolt"] = {
+    id = "lightningbolt",
+    manausage = 20,
+    NTRequired = false,
+    inputType = "single",
+    active = false,
+    cast = function(client)
+        local position = client.Character.WorldPosition + Vector2(0, 50)
+        local position2 = Javiermagic.GetClientCursor(client)
+        local rotation = Javiermagic.GetRotation(position, position2)
+        local character = client.Character
+        Javiermagic.SpawnProjectile("LightningBolt", position, rotation, character)
     end
 }
